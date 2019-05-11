@@ -222,27 +222,7 @@ function endStopwatch () {
     
 }
 
-// Editing functions
 
-function details () {
-    alert('works');
-    
-}
-
-
-// setting the local storage
-if (typeof(Storage) !== "undefined") {
-      // Code for localStorage/sessionStorage.
-        // .setItem();
-        // .getItem();
-        // .removeItem();
-        // convert a string to a number Number(counter)
-        
-        
-    } else {
-      alert('Sorry! No Web Storage support');
-    }
-    
 
 
 
