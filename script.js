@@ -5,6 +5,8 @@ var list = document.getElementById('list');
 var addButton = document.getElementById('add');
 var title = document.getElementById('title');
 var today = document.getElementById('today');
+var burgerNav = document.getElementById('burgerNav');
+var killSideBar = document.getElementById('killSideBar');
 
 
 
@@ -139,7 +141,7 @@ startString =  nowH + ":" + nowM + ":" + nowS;
         }
     }
     
-    tickTock = setInterval(stopwatch, 1000);
+    tickTock = setInterval(stopwatch, 1);
 }
 
 // an event for when adding a new task
@@ -174,7 +176,7 @@ function endStopwatch () {
             }
         } else {
             
-            timeConsumed += ' Hours';
+            timeConsumed = timeConsumed.slice(0,-3) + ' Hours';
         }
  
         document.getElementById(idendTask).innerHTML = timeConsumed;
@@ -223,7 +225,17 @@ function endStopwatch () {
 }
 
 
+burgerNav.addEventListener('click', sideBar);
+killSideBar.addEventListener('click', closeSideBar);
 
+
+function sideBar () {
+        document.getElementById('sidebar').style = 'display:block';
+}
+
+function closeSideBar () {
+        document.getElementById('sidebar').style = 'display:none';   
+}
 
 
 

@@ -2,25 +2,23 @@
 
 
 @media screen and (max-width:400px) {
-
+    
     body {
         background:#fafafa; 
         counter-reset:section;
-        font-family: sans-serif;
         margin:0px;
         padding:0px;
         color:black;
+        font-family: sans-serif;
     } 
 
     div.container {
         display:block;
-        position: relative;
         margin-top:20px;
         width:100%;
     }
 
     nav {
-        position: relative;
         background:#333;
         color:white;
         width:100%;
@@ -30,7 +28,7 @@
     nav h1 {
         font-size: 1.5em;  
         text-align: center;
-        margin:0px;
+        margin: 0px;
         font-family:sans-serif;
         line-height: 90px;
     }
@@ -38,7 +36,7 @@
     #burgerNav {
         float:left;
         margin-left:10px;
-        margin-top:40px;
+        margin-top:35px;
     }
     
     .bar {
@@ -72,10 +70,9 @@
         border-radius: 50%;
         text-align: center;
         font-size:3em;
-        margin:10px auto;
+        margin:20px auto 5px;
         color:white;
         border:3px solid white;
-        transition: all 1s;
     }
     
     #sidebar h2 {
@@ -88,12 +85,13 @@
         color:white;
         text-decoration:none;
         font-size:1.2em;
+       
         margin-top:30px;
         padding: 10px;
         padding-left:10px;
         background-color:#333;
     }
-    
+
     input {
         display:inline-block;
         height:50px;
@@ -122,9 +120,9 @@
 
     .disable {
         background-color:#ddd !important;
-    
     }
 
+    
     h4:hover {
     background:#394;
     }
@@ -150,22 +148,16 @@
         font-weight: 900px;
         padding:10px;
         margin: 0px 5%;
+        overflow:hidden;
     }
-    
+
     #taskName {
         display:block;
-        width:80%;
-        margin-bottom:5px;
-        font-weight: 500;
+        margin-bottom:15px;
+       font-weight: 500;
         font-size:1em;
     }
     
-    .stopwatch {
-        color:red;
-        font-weight: 400;
-        font-size:.8em;
-        font-family: sans-serif;
-    }
     
     .end {
         display:block;
@@ -178,16 +170,31 @@
         border-radius:3px;
         font-weight: 300;
         color:#fff;
-        background:#4a5;
+        background:#666;
         font-weight: 500;
+    }
+    
+    #del {
+        display: inline-block;
+        color:red;
+        position:absolute;
+        bottom:8px;
+        right: 10px;
+        text-align: center;
+        border:1px solid red;
+        padding:3px;
+        font-size:.7em;
+        width:10px;
+        border-radius:100%;
     }
     
     ol li:nth-child(even){
         background-color:#fff;
         color:#222;
     }
+    
     ol li:nth-child(odd){
-       background-color:#eee;
+       background-color:#efefef;
         color:#333;
 
     }

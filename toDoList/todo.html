@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <title> To-do list </title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width initial-scale=1">
+</head>    
+<body>
+    
+    <nav>
+        <div id='burgerNav'>
+            <div class='bar'></div>
+            <div class='bar'></div>
+            <div class='bar'></div>
+        </div>
+        <h1 id="today"></h1>
+    </nav>
+    
+    <div class="container"> 
+      <input type="text" id="value" placeholder="Add a new item to do">
+      <h4 id="add">+</h4>
+        
+      <ol id="list">
+        <li>
+            <span id='taskName'>Default task To-do</span>
+            <b id='check' data-checked='false' class='end'>Check</b>
+            <span id='del'>X</span>
+        </li>
+      </ol>
+    </div>
+    
+    <div id='sidebar'>
+        <h2 id='killSideBar'>X</h2>
+        <div id='circle'>JD</div>
+        <h2>John Doe</h2>
+        <a href='../index.html'>Moniter my day</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
