@@ -44,8 +44,7 @@
     -->
  <preference name="phonegap-version"       value="cli-7.1.0" />
     <!-- Plugins -->
-    <icon platform='android' src='icon.png' width='180' height='180' />
-    <splashscreen platform='android' src='splash.png'  />
+    
 
     <!-- Core plugins -->
     <plugin name="cordova-plugin-battery-status" />
