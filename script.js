@@ -171,7 +171,20 @@ function endStopwatch () {
         hours = 0;
         
         var timeConsumed = document.getElementById(idStopwatch).innerHTML;
-
+    
+    // adding labels (seconds, minutes, hours)
+        if(timeConsumed.slice(0,2) == '00') {
+            if(timeConsumed.slice(0,5) == '00:00'){
+                timeConsumed = timeConsumed.slice(6) + ' Seconds';
+            }
+            else {
+                 timeConsumed = timeConsumed.slice(3) + ' Minutes';
+            }
+        } else {
+            
+            timeConsumed += ' Hours';
+        }
+ 
         document.getElementById(idendTask).innerHTML = timeConsumed;
 
         // setting the stop watch place to show time range
