@@ -34,9 +34,9 @@
     }
     
     #burgerNav {
-        float:left;
-        margin-left:10px;
-        margin-top:35px;
+        position:absolute;
+        left:10px;
+        top:35px;
     }
     
     .bar {
@@ -50,32 +50,53 @@
     #sidebar {
         display:none;
         position: absolute;
-        width:70%;
+        width:75%;
         top:0px;
         height:100vh;
         background-color:#444;
         transition:all 1s;
     }
     
+    #sidebar .upper {
+        position:absolute;
+        top:0px;
+        height: 30vh;
+        width:100%;
+        background-color:#111;
+    }
+    
+    #sidebar .lower {
+        position: absolute;
+        top:30vh;
+        width:100%;
+    }
+    
     #sidebar #killSideBar {
-        float: right;
+        position: absolute;
         color:white;
-        margin-top: 10px;
-        margin-right: 10px;
+        top: 10px;
+        right: 10px;
     }
     
     #sidebar #circle {
-        width:80px;
-        height: 80px;
+        width:120px;
+        height: 120px;
         border-radius: 50%;
         text-align: center;
         font-size:3em;
         margin:20px auto 5px;
         color:white;
         border:3px solid white;
+        transition: all 1s;
+        overflow: hidden;
+    }
+    
+    #circle img {
+        width:120px;
     }
     
     #sidebar h2 {
+        margin-top:0px;
         color:white;
         text-align: center;
     }
@@ -85,8 +106,7 @@
         color:white;
         text-decoration:none;
         font-size:1.2em;
-       
-        margin-top:30px;
+        margin-top:0px;
         padding: 10px;
         padding-left:10px;
         background-color:#333;

@@ -31,11 +31,6 @@ function createTask(e) {
     if (canAdd === true) {
         // check that task name is not empty nor longer than 60 characters
         if (title.value !== '') {
-            // no more tasks could be added
-            document.querySelector('#add').setAttribute('class', 'disable');
-            document.querySelector('#title').setAttribute('disabled', 'true');
-            canAdd = false;
-
             // marking the current task as special
             n++;
             idStopwatch = 'stopwatch' + n.toString();
@@ -47,18 +42,23 @@ function createTask(e) {
             list.innerHTML += 
             "<li> <span onclick='details()' id='taskName'>" + title.value + "</span><b id='" + idStopwatch + "' class='stopwatch'>00:00:00</b> <b id='" + idendTask + "' class='end' onclick='endStopwatch()'>End</b></li>";
 
+            // finishing up
+            title.value = "";
+            stopWatchRunning = true;
+            
+            // no more tasks could be added
+            document.querySelector('#add').setAttribute('class', 'disable');
+            document.querySelector('#title').setAttribute('disabled', 'true');
+            canAdd = false;
 
             // setting the stopwatch 
             timer();
             
             // voicing your task 
-            var voice = new SpeechSynthesisUtterance();
-            voice.text = title.value + ' is now being monitored';
-            speechSynthesis.speak(voice);
+//            var voice = new SpeechSynthesisUtterance();
+//            voice.text = title.value + ' is now being monitored';
+//            speechSynthesis.speak(voice);  
 
-            // finishing up
-            title.value = "";
-            stopWatchRunning = true;
         
     } else {
         alert("task name can't be empty");
@@ -85,8 +85,8 @@ var startClock = new Date();
 var nowH = startClock.getHours();
 var nowM = startClock.getMinutes();
 var nowS = startClock.getSeconds();
-    // for good looks 
     
+    // for good looks 
     if ( nowS < 10){
             nowS = "0" + nowS.toString();
         }
@@ -108,40 +108,38 @@ startString =  nowH + ":" + nowM + ":" + nowS;
     
         function stopwatch () { 
         if (stopWatchRunning === true){
-        secs++;
-        if (secs == 60) {
-            mins++;
-            secs = 0;
-            
-            if ( mins == 60 ) {
-                hours++;
-                mins = 0;
+            secs++;
+            if (secs == 60) {
+                mins++;
+                secs = 0;
+
+                if ( mins == 60 ) {
+                    hours++;
+                    mins = 0;
+                }
             }
-        }
-        
-        
-        
-        // for good looks
-        if ( secs < 10){
-            displaySecs = "0" + secs.toString();
-        }
-        else { displaySecs = secs; }
-        
-        if ( mins < 10){
-            displayMins = "0" + mins.toString();
-        }
-        else { displayMins = mins; }
-        
-        if ( hours < 10){
-            displayHours = "0" + hours.toString();
-        }
-        else { displayHours = hours; }
-        
-        document.getElementById(idStopwatch).innerHTML = displayHours + ':' + displayMins + ':' + displaySecs;
-        }
+            // for good looks
+            if ( secs < 10){
+                displaySecs = "0" + secs.toString();
+            }
+            else { displaySecs = secs; }
+
+            if ( mins < 10){
+                displayMins = "0" + mins.toString();
+            }
+            else { displayMins = mins; }
+
+            if ( hours < 10){
+                displayHours = "0" + hours.toString();
+            }
+            else { displayHours = hours; }
+            
+            document.getElementById(idStopwatch).innerHTML = displayHours + ':' + displayMins + ':' + displaySecs;
+         }
     }
     
-    tickTock = setInterval(stopwatch, 1);
+    
+    tickTock = setInterval(stopwatch, 1000);
 }
 
 // an event for when adding a new task
