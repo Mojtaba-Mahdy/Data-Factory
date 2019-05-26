@@ -72,7 +72,7 @@
         <plugin name="com.phonegap.plugins.barcodescanner" />
     -->
 
-
+    <icon platform='android' src='icon.png' />
     <!--
         Define access to external domains.
         <access />            - a blank access tag denies access to all external resources.
