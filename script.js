@@ -6,7 +6,7 @@ var addButton = document.getElementById('add');
 var title = document.getElementById('title');
 var today = document.getElementById('today');
 var burgerNav = document.getElementById('burgerNav');
-var killSideBar = document.getElementById('killSideBar');
+var killSideBar = document.getElementById('smoothClosure');
 
 
 
@@ -222,32 +222,60 @@ function endStopwatch () {
     
 }
 
-
-burgerNav.addEventListener('click', sideBar);
+// Opening and closing the side bar
+burgerNav.addEventListener('click', openSideBar);
 killSideBar.addEventListener('click', closeSideBar);
 
 
-function sideBar () {
+function openSideBar () {
         document.getElementById('sidebar').style = 'display:block';
+    
+        killSideBar.style.display = 'block';
 }
 
 function closeSideBar () {
         document.getElementById('sidebar').style = 'display:none';   
+        
+        killSideBar.style.display = 'none';
 }
 
 
 
+// changing the user name
+ var currName = document.getElementById('userName');
+currName.addEventListener('click', changeUserName);
+
+
+function changeUserName () {
+    var userName = prompt('Type your new user name');
+    
+    document.getElementById('userName').innerHTML = userName;
+    
+    // create a local storage variable 
+    localStorage.setItem('userName', userName);
+}
+
+
+// previous data - runs onload of the page
+function previousData(){
+    // adding the username
+    if (localStorage.userName){
+        document.getElementById('userName').innerHTML = localStorage.userName;
+    }
+}
+
+
 // Change your profile picture 
 var changePP = document.getElementById('profileChange');
-changePP.addEventListener('click', addNewProfile);
+
 var pictureSource = navigator.camera.PictureSourceType;
 var destinationType = navigator.camera.DestinationType;
 
-function addNewProfile() {
+function addNewProfile(source) {
     navigator.camera.getPicture(onPhotoURISuccess, onError, {
         quality:50,
         destinationType: destinationType.FILE_URI,
-        sourceType: pictureSource.PHOTOLIBRARY
+        sourceType: source
     });
 }
 
@@ -258,12 +286,5 @@ function onPhotoURISuccess (imageURI) {
 function onError (error) {
     alert('Error: ' + error);
 }
-
-
-
-
-
-
-
 
 

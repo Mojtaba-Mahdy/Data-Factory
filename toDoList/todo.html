@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="theme-color" content="#222">
 </head>    
-<body>
+<body onload="oldTasks();">
     
     <nav>
         <div id='burgerNav'>
@@ -31,18 +31,26 @@
       </ol>
     </div>
     
+<!--    Beginning of side bar -->
     <div id='sidebar'>
         <div class='upper'>
-            <h2 id='killSideBar'>X</h2>
             <div id='circle'>
-                <img src='../profile.jpg' alt='profile picture'>
+                <div class='innerCircle'>
+                    <img id='profilePicture' src='../images/profile.jpg' alt='profile picture'>
+                </div>
+                <div id='profileChange'></div>
             </div>
-            <h2>John Doe</h2>
+            <h2 id='userName'>John Doe</h2>
         </div>
+        
         <div class="lower">
             <a href='../index.html'>Moniter my day</a>
+            <footer>Made with <span>love</span> by John Doe</footer>
         </div>
     </div>
+    <div id='smoothClosure'></div>
+<!--    End of side bar -->
+    
     <script src="script.js"></script>
 </body>
 </html>

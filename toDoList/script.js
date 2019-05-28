@@ -6,7 +6,7 @@ var add = document.getElementById('add');
 var title = document.getElementById('value');
 var today = document.getElementById('today');
 var burgerNav = document.getElementById('burgerNav');
-var killSideBar = document.getElementById('killSideBar');
+var killSideBar = document.getElementById('smoothClosure');
 
 
 
@@ -31,9 +31,13 @@ add.onclick = function(){
         idCheck = 'check' + n.toString();
         idendTask = 'taskName' + n.toString();
         
+        var item = "<li> <span id='" + idendTask + "'>" + title.value + "</span> <b id='" + idCheck + "' class='end' data-checked='false'>Check</b><span id='del'>X</span></li>";
+        
+        localStorage.setItem(idCheck, item);
+        
         // then add a new list item to the ol
-        list.innerHTML += 
-            "<li> <span id='" + idendTask + "'>" + title.value + "</span> <b id='" + idCheck + "' class='end' data-checked='false'>Check</b><span id='del'>X</span></li>";
+        list.innerHTML += item;
+            
 
         // re-setting the input
         value.value = "";
@@ -80,6 +84,16 @@ list.addEventListener('click', delItem);
 function delItem(e) {
     if (e.target.id == 'del'){
         if (confirm('Are you sure?')){
+            // delete from localstorage first
+           var checkTag = e.target.previousElementSibling;
+            
+            var idToDelete = checkTag.id;
+            localStorage.removeItem(idToDelete);
+            
+            
+       
+            
+            // delete li tag
             var li = e.target.parentElement;
             list.removeChild(li);
         }   
@@ -88,23 +102,52 @@ function delItem(e) {
 
 
 
-
-burgerNav.addEventListener('click', sideBar);
+// Opening and closing the side bar
+burgerNav.addEventListener('click', openSideBar);
 killSideBar.addEventListener('click', closeSideBar);
 
 
-function sideBar () {
+function openSideBar () {
         document.getElementById('sidebar').style = 'display:block';
+    
+    killSideBar.style.display = 'block';
 }
 
 function closeSideBar () {
-        document.getElementById('sidebar').style = 'display:none';   
+        document.getElementById('sidebar').style = 'display:none';  
+    
+    killSideBar.style.display = 'none';
 }
 
 
 
+// adding previous task - runs onload of the body tag
+function oldTasks() {
+    
+    for (var i=0; i < localStorage.length; i++){
+        var oldTask = localStorage.getItem(localStorage.key(i));
+        console.log(oldTask);
+        list.innerHTML += '<li>' + oldTask + '</li>'
+    }
+     
+    
+    // adding the username
+    if (localStorage.userName){
+        document.getElementById('userName').innerHTML = localStorage.userName;
+    }
+}
 
 
+document.getElementById('userName').addEventListener('click', changeUserName);
 
 
+// changing the user name
+function changeUserName () {
+    var userName = prompt('Type your new user name');
+    
+    document.getElementById('userName').innerHTML = userName;
+    
+    // create a local storage variable 
+    localStorage.setItem('userName', userName);
+}
 

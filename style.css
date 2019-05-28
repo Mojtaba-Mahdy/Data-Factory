@@ -11,6 +11,7 @@
         padding:0px;
         color:black;
         user-select: none;
+        box-sizing: border-box;
     } 
 
     div.container {
@@ -50,6 +51,7 @@
         margin-bottom:5px;
     }
     
+    
     #sidebar {
         display:none;
         position: absolute;
@@ -58,6 +60,17 @@
         height:100vh;
         background-color:#444;
         transition:all 1s;
+        z-index:1;
+    }
+    
+    #smoothClosure {
+       display:none;
+       position: absolute;
+       top:0px;
+       right:0px;
+       background-color: rgba(0,0,0,0.3);
+        width:25%;
+        height:100vh;
     }
     
     #sidebar .upper {
@@ -66,20 +79,16 @@
         height: 30vh;
         width:100%;
         background-color:#111;
+    
     }
     
     #sidebar .lower {
         position: absolute;
         top:30vh;
         width:100%;
+        height: 70vh;
     }
     
-    #sidebar #killSideBar {
-        position: absolute;
-        color:white;
-        top: 10px;
-        right: 10px;
-    }
     
     #sidebar #circle {
         position: relative;
@@ -140,6 +149,22 @@
         background-color:#333;
     }
     
+    .lower footer {
+        position: absolute;
+        bottom: 0px;
+        width:100%;
+        background-color:#111;
+        color:white;
+        font-size: 1em;
+        text-align: center;
+        padding:5px;
+        box-sizing: border-box;
+    }
+    
+    .lower footer span {
+        color:red;
+    }
+    
     input {
         display:inline-block;
         height:50px;
@@ -151,7 +176,7 @@
     }
 
     #add {
-        diSPlay:inline-block;
+        display:inline-block;
         Width:13%;
         margin:0px 5% 0px 0px;
         height:50px;
