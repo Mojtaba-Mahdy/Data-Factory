@@ -33,6 +33,8 @@ add.onclick = function(){
         
         var item = "<li> <span id='" + idendTask + "'>" + title.value + "</span> <b id='" + idCheck + "' class='end' data-checked='false'>Check</b><span id='del'>X</span></li>";
         
+        
+        
         localStorage.setItem(idCheck, item);
         
         // then add a new list item to the ol
@@ -40,12 +42,12 @@ add.onclick = function(){
             
 
         // re-setting the input
-        value.value = "";
-
+        value.value = "";  
+        
         var allBs = document.querySelectorAll('b');
         for (var i =0; i < allBs.length; i++){
            allBs[i].addEventListener('click', check);
-        }   
+        } 
         
     } else {
         alert("To-do item can't be empty");
@@ -59,7 +61,9 @@ add.onclick = function(){
 
 function check(e) {
    // strike through the taskName of task previous to the current id
+    
     var currCheck = e.target;
+    var currtaskid = e.target.id;
     var checked = currCheck.getAttribute('data-checked');
     var currTaskName = currCheck.previousElementSibling;
     
@@ -68,11 +72,21 @@ function check(e) {
         currTaskName.style.color = '#000';
         currCheck.setAttribute('data-checked','false');
         currCheck.innerHTML = 'check';
+        
+        
+        // update local storage
+        var updatedLI = '<li>' + currCheck.parentElement.innerHTML + '</li>';
+        localStorage.setItem(currtaskid, updatedLI);
+        
     } else {
         currTaskName.style.textDecoration = 'line-through';
         currTaskName.style.color = '#888';
         currCheck.setAttribute('data-checked','true');
         currCheck.innerHTML = 'uncheck';
+        
+        // update local storage
+        var updatedLI = '<li>' + currCheck.parentElement.innerHTML + '</li>';
+        localStorage.setItem(currtaskid, updatedLI);
     }
     
 }
@@ -134,6 +148,10 @@ function oldTasks() {
         list.innerHTML +=  oldTask;
     }
      
+    var allBs = document.querySelectorAll('b');
+        for (var i =0; i < allBs.length; i++){
+           allBs[i].addEventListener('click', check);
+        } 
     
     // adding the username
     if (localStorage.userName){
