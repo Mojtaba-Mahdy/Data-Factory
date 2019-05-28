@@ -126,8 +126,12 @@ function oldTasks() {
     
     for (var i=0; i < localStorage.length; i++){
         var oldTask = localStorage.getItem(localStorage.key(i));
-        console.log(oldTask);
-        list.innerHTML += '<li>' + oldTask + '</li>'
+        
+        if (oldTask == localStorage.userName){
+            continue;
+        }
+        
+        list.innerHTML +=  oldTask;
     }
      
     
