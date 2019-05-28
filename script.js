@@ -237,6 +237,33 @@ function closeSideBar () {
 
 
 
+// Change your profile picture 
+var changePP = document.getElementById('profileChange');
+changePP.addEventListener('click', addNewProfile);
+var pictureSource = navigator.camera.PictureSourceType;
+var destinationType = navigator.camera.DestinationType;
+
+function addNewProfile() {
+    navigator.camera.getPicture(onPhotoURISuccess, onError, {
+        quality:50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: pictureSource.PHOTOLIBRARY
+    });
+}
+
+function onPhotoURISuccess (imageURI) {
+    document.getElementById('profilePicture').src = imageURI;
+}
+
+function onError (error) {
+    alert('Error: ' + error);
+}
+
+
+
+
+
+
 
 
 
