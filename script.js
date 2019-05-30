@@ -228,9 +228,14 @@ killSideBar.addEventListener('click', closeSideBar);
 
 
 function openSideBar () {
+    window.onscroll = function () {
+        window.scrollTo(0,0);
+    }
+    
         document.getElementById('sidebar').style = 'display:block';
     
         killSideBar.style.display = 'block';
+    
 }
 
 function closeSideBar () {
@@ -249,10 +254,19 @@ currName.addEventListener('click', changeUserName);
 function changeUserName () {
     var userName = prompt('Type your new user name');
     
-    document.getElementById('userName').innerHTML = userName;
-    
     // create a local storage variable 
     localStorage.setItem('userName', userName);
+    
+    if (!userName){
+       localStorage.userName = 'John Doe';
+    }
+    
+    if (userName == '') {
+        localStorage.userName = 'John Doe';
+    }
+    
+    document.getElementById('userName').innerHTML = localStorage.userName;
+    
 }
 
 
@@ -268,8 +282,9 @@ function previousData(){
 // Change your profile picture 
 var changePP = document.getElementById('profileChange');
 
-var pictureSource = navigator.camera.PictureSourceType;
-var destinationType = navigator.camera.DestinationType;
+var pictureSource = navigator.camera.pictureSourceType;
+
+var destinationType = navigator.camera.destinationType;
 
 function addNewProfile(source) {
     navigator.camera.getPicture(onPhotoURISuccess, onError, {

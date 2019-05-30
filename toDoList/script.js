@@ -24,7 +24,9 @@ today.innerHTML = refinedDate;
 
 // adding a new task <li> to the <ol>
 var n = 0;
-add.onclick = function(){
+add.addEventListener('click', addingTask);
+                     
+function addingTask(){
     // the task name can't be empty
     if (value.value != '') {        
         n++;
@@ -36,6 +38,7 @@ add.onclick = function(){
         
         
         localStorage.setItem(idCheck, item);
+        
         
         // then add a new list item to the ol
         list.innerHTML += item;
@@ -104,7 +107,6 @@ function delItem(e) {
             var idToDelete = checkTag.id;
             localStorage.removeItem(idToDelete);
             
-            
        
             
             // delete li tag
@@ -122,9 +124,15 @@ killSideBar.addEventListener('click', closeSideBar);
 
 
 function openSideBar () {
+    
+    window.onscroll = function () {
+        window.scrollTo(0,0);
+    }
+    
         document.getElementById('sidebar').style = 'display:block';
     
     killSideBar.style.display = 'block';
+    
 }
 
 function closeSideBar () {
@@ -139,24 +147,30 @@ function closeSideBar () {
 function oldTasks() {
     
     for (var i=0; i < localStorage.length; i++){
+        
         var oldTask = localStorage.getItem(localStorage.key(i));
         
+        console.log(localStorage.key(i));
+        
         if (oldTask == localStorage.userName){
-            continue;
+            oldTask = '';
         }
         
         list.innerHTML +=  oldTask;
     }
      
-    var allBs = document.querySelectorAll('b');
+    
+     var allBs = document.querySelectorAll('b');
         for (var i =0; i < allBs.length; i++){
            allBs[i].addEventListener('click', check);
+            
         } 
     
     // adding the username
     if (localStorage.userName){
         document.getElementById('userName').innerHTML = localStorage.userName;
     }
+    
 }
 
 
@@ -167,9 +181,19 @@ document.getElementById('userName').addEventListener('click', changeUserName);
 function changeUserName () {
     var userName = prompt('Type your new user name');
     
-    document.getElementById('userName').innerHTML = userName;
+    
     
     // create a local storage variable 
     localStorage.setItem('userName', userName);
+    
+    if (!userName){
+       localStorage.userName = 'John Doe';
+    }
+    
+    if (userName == '') {
+        localStorage.userName = 'John Doe';
+    }
+    
+    document.getElementById('userName').innerHTML = localStorage.userName;
 }
 

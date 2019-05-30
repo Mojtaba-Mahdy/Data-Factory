@@ -1,0 +1,5 @@
+
+- saving data
+- smoothclosure of the side bar
+- scrolling when the sidebar is open
+- 
