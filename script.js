@@ -22,34 +22,69 @@ today.innerHTML = refinedDate;
 
 
 
+
+
 // adding a new task <li> to the <ol>
-var n = 0;
 var canAdd = true;
+
 
 function createTask(e) {
     
     if (canAdd === true) {
         // check that task name is not empty nor longer than 60 characters
+        
+        taskName = title.value;
+        sameName();
+        
         if (title.value !== '') {
+            
+            
+            setTimeout(function(){ 
+             if(exists == 'true'){
+            alert('A task with this name already exists');
+            title.value = '';
+        } else {
+            
+            // the delete all secret function 
+            if ( title.value.toLowerCase() == 'delete all') {
+                deleteAll();
+                title.value = '';
+                return;
+            }
+            
+            
             // marking the current task as special
-            n++;
-            idStopwatch = 'stopwatch' + n.toString();
-            idendTask = 'endTask' + n.toString();
-            // idTaskName = 'taskName' + n.toString();
+            numberN++;
+//            idStopwatch 
+            
+            localStorage.idStopwatch = 'stopwatch' + numberN.toString();
+            
+            localStorage.idendTask = 'endTask' + numberN.toString();
             
       
             // then add a new list item to the ol   
-            list.innerHTML += 
-            "<li> <span onclick='details()' id='taskName'>" + title.value + "</span><b id='" + idStopwatch + "' class='stopwatch'>00:00:00</b> <b id='" + idendTask + "' class='end' onclick='endStopwatch()'>End</b></li>";
+            item = 
+            "<li> <span class='details' id='taskName'>" + title.value + "</span><b id='" + localStorage.idStopwatch + "' class='stopwatch'>00:00:00</b> <b id='" + localStorage.idendTask + "' class='end' onclick='endStopwatch()'>End</b></li>";
+            
+            taskTitle = title.value;
+            
+             list.innerHTML += item;
+            
+            insertItem();
 
             // finishing up
             title.value = "";
-            stopWatchRunning = true;
+            localStorage.setItem('SWrun', 'true');
+//            stopWatchRunning = true;
             
             // no more tasks could be added
             document.querySelector('#add').setAttribute('class', 'disable');
             document.querySelector('#title').setAttribute('disabled', 'true');
             canAdd = false;
+            
+            if(numberN == 1) {
+                selectingIds();
+            }
 
             // setting the stopwatch 
             timer();
@@ -58,7 +93,8 @@ function createTask(e) {
 //            var voice = new SpeechSynthesisUtterance();
 //            voice.text = title.value + ' is now being monitored';
 //            speechSynthesis.speak(voice);  
-
+        }
+    },200);
         
     } else {
         alert("task name can't be empty");
@@ -67,12 +103,29 @@ function createTask(e) {
 }
 
 
+var numberN = 0;
+function gettingN(tx, results){
+    if (results.rows.length == 0){
+        if (numberN !== 0) {
+            numberN = numberN;
+        } else { numberN = 0;
+              }
+    } else {
+    var len = results.rows.length;
+    var lastID = len - 1;
+    numberN = results.rows.item(lastID).id;
+   
+    }
+}
 
+function noTasks() {
+    numberN = numberN;
+}
 // how to start a stopwatch for the newly added <li>
 var secs = 0;  
 var mins = 0;
 var hours = 0;
-var stopWatchRunning = true;
+//var stopWatchRunning;
 
 var displaySecs;
 var displayMins;
@@ -81,43 +134,70 @@ var displayHours;
 function timer () {
 
     // registering the time the task started 
-var startClock = new Date();
-var nowH = startClock.getHours();
-var nowM = startClock.getMinutes();
-var nowS = startClock.getSeconds();
+    // startClock = startTime nowS nowM nowH
+    var startTime = new Date();
+    localStorage.startSecs = startTime.getSeconds();
+    localStorage.startMins = startTime.getMinutes();
+    localStorage.startHrs = startTime.getHours();
+
     
     // for good looks 
-    if ( nowS < 10){
-            nowS = "0" + nowS.toString();
+    if ( localStorage.startSecs < 10){
+            localStorage.startSecs = "0" + localStorage.startSecs.toString();
         }
-        else { nowS = nowS; }
+        else { localStorage.startSecs = localStorage.startSecs; }
         
-        if ( nowM < 10){
-            nowM = "0" + nowM.toString();
+        if ( localStorage.startMins < 10){
+            localStorage.startMins = "0" + localStorage.startMins.toString();
         }
-        else { nowM = nowM; }
+        else { localStorage.startMins = localStorage.startMins; }
         
-        if ( nowH < 10){
-            nowH = "0" + nowH.toString();
+        if ( localStorage.startHrs < 10){
+            localStorage.startHrs = "0" + localStorage.startHrs.toString();
         }
-        else { nowH = nowH; }
+        else { localStorage.startHrs = localStorage.startHrs; }
     
     // declaring a variable without the 'var' keyword makes //it auomaticly global
-startString =  nowH + ":" + nowM + ":" + nowS;
+localStorage.startString =  localStorage.startHrs + ":" + localStorage.startMins + ":" + localStorage.startSecs;
     
     
-        function stopwatch () { 
-        if (stopWatchRunning === true){
-            secs++;
-            if (secs == 60) {
-                mins++;
-                secs = 0;
+    
+    
+    
+    tickTock = setInterval(stopwatch, 1000);
+}
 
-                if ( mins == 60 ) {
-                    hours++;
-                    mins = 0;
-                }
-            }
+function stopwatch () { 
+        if (localStorage.SWrun == 'true'){
+            
+            nowSecs = new Date().getSeconds();
+     nowMins = new Date().getMinutes();
+     nowHrs = new Date().getHours();
+       
+       // seconds
+        if(nowSecs < localStorage.startSecs){
+            nowSecs += 60;
+            secs = nowSecs - localStorage.startSecs;
+            nowMins -= 1;
+        } else {
+            secs = nowSecs - localStorage.startSecs;
+        }
+           // minutes 
+        if(nowMins < localStorage.startMins){
+            nowMins += 60;
+            mins = nowMins - localStorage.startMins;
+            nowHrs -= 1;
+        } else {
+            mins = nowMins - localStorage.startMins;
+        }
+        //Hours
+           if(nowHrs < localStorage.startHrs){
+            nowHrs += 24;
+            hours = nowHrs - localStorage.startHrs;
+        } else {
+            hours = nowHrs - localStorage.startHrs;
+        }
+            
             // for good looks
             if ( secs < 10){
                 displaySecs = "0" + secs.toString();
@@ -134,13 +214,30 @@ startString =  nowH + ":" + nowM + ":" + nowS;
             }
             else { displayHours = hours; }
             
-            document.getElementById(idStopwatch).innerHTML = displayHours + ':' + displayMins + ':' + displaySecs;
+            
+    var updatedLI = '<li>' + document.getElementById(localStorage.idendTask).parentNode.innerHTML + '</li>';
+    
+    
+    var taskName = document.getElementById(localStorage.idendTask).previousElementSibling.previousElementSibling;
+    
+    var stripped = '';
+    for (var i =0; i < updatedLI.length; i++){
+        
+        if (updatedLI[i] == '"' ){
+                stripped = stripped;
+            } else {
+                stripped += updatedLI[i];
+            }
+        }
+                
+            
+    db.transaction(function(tx){
+        tx.executeSql('UPDATE tasks SET content ="' + stripped + '" WHERE task_name ="' + taskName.innerHTML + '";');
+        });
+            
+     document.getElementById(localStorage.idStopwatch).innerHTML = displayHours + ':' + displayMins + ':' + displaySecs;
          }
     }
-    
-    
-    tickTock = setInterval(stopwatch, 1000);
-}
 
 // an event for when adding a new task
 addButton.addEventListener('click', createTask);
@@ -154,7 +251,8 @@ function endStopwatch () {
        // stop the stopwatch count
 
         clicked = true;
-        stopWatchRunning = false;
+//        stopWatchRunning = false;
+    localStorage.SWrun = 'false';
         secs = 0;
         mins = 0;
         hours = 0;
@@ -162,7 +260,7 @@ function endStopwatch () {
         
         // replace end with the value and the stopwatch with time range
 
-        var timeConsumed = document.getElementById(idStopwatch).innerHTML;
+        var timeConsumed = document.getElementById(localStorage.idStopwatch).innerHTML;
     
     // adding labels (seconds, minutes, hours)
         if(timeConsumed.slice(0,2) == '00') {
@@ -177,7 +275,7 @@ function endStopwatch () {
             timeConsumed = timeConsumed.slice(0,-3) + ' Hours';
         }
  
-        document.getElementById(idendTask).innerHTML = timeConsumed;
+        document.getElementById(localStorage.idendTask).innerHTML = timeConsumed;
 
         // setting the stop watch place to show time range
         // figuring the time the task ended 
@@ -204,13 +302,31 @@ function endStopwatch () {
         
         
         // replacing the stopwatch with time range
-        document.getElementById(idStopwatch).innerHTML = startString + ' - ' + endString;
+        document.getElementById(localStorage.idStopwatch).innerHTML = localStorage.startString + ' - ' + endString;
             
        clearInterval(tickTock); 
     
        // can't press end agian 
-        document.getElementById(idendTask).setAttribute('onclick', '');
-        document.getElementById(idendTask).style.backgroundColor = '#777';
+        document.getElementById(localStorage.idendTask).setAttribute('onclick', '');
+        document.getElementById(localStorage.idendTask).style.backgroundColor = '#777';
+    
+    var updatedLI = '<li>' + document.getElementById(localStorage.idendTask).parentNode.innerHTML + '</li>';
+    
+    
+    var taskName = document.getElementById(localStorage.idendTask).previousElementSibling.previousElementSibling;
+    
+    var stripped = '';
+    for (var i =0; i < updatedLI.length; i++){
+            console.log('inside for loop');
+        if (updatedLI[i] == '"' ){
+                stripped = stripped;
+            } else {
+                stripped += updatedLI[i];
+            }
+        }
+        
+     
+    
     
         //can add a new task to your day now
         document.querySelector('#add').setAttribute('class', '');
@@ -218,9 +334,19 @@ function endStopwatch () {
         'disabled');
         canAdd = true;
 
+    db.transaction(function(tx){
+        tx.executeSql('UPDATE tasks SET content ="' + stripped + '" WHERE task_name ="' + taskName.innerHTML + '";');
+        }, databaseError, getItems);
     
     
 }
+
+
+function deleteAll(){
+    db.transaction(function(tx){
+        tx.executeSql('DELETE FROM tasks;');
+        }, databaseError, getItems);
+ }
 
 // Opening and closing the side bar
 burgerNav.addEventListener('click', openSideBar);
@@ -239,6 +365,10 @@ function openSideBar () {
 }
 
 function closeSideBar () {
+    
+        window.onscroll = function () {
+        window.scroll();
+    }
         document.getElementById('sidebar').style = 'display:none';   
         
         killSideBar.style.display = 'none';
@@ -254,15 +384,31 @@ currName.addEventListener('click', changeUserName);
 function changeUserName () {
     var userName = prompt('Type your new user name');
     
+    
+     if(userName.toLowerCase() == 'noname' || userName.toLowerCase() == 'no one' || userName.toLowerCase() == 'nameless' || userName.toLowerCase() == 'nobody'){
+        userName = 'Mr. Mystery';
+    }
+    
     // create a local storage variable 
     localStorage.setItem('userName', userName);
     
     if (!userName){
-       localStorage.userName = 'John Doe';
+        console.log('no user name');
+        if(localStorage.userName){
+            console.log('inside if');
+            localStorage.userName = localStorage.userName;
+        } else {
+        localStorage.userName = 'John Doe';
+        }
     }
     
-    if (userName == '') {
+   if (userName == '') {
+       console.log('empty');
+        if(localStorage.userName){
+            localStorage.userName = localStorage.userName;
+        } else {
         localStorage.userName = 'John Doe';
+        }
     }
     
     document.getElementById('userName').innerHTML = localStorage.userName;
@@ -270,36 +416,143 @@ function changeUserName () {
 }
 
 
+// setting the database - the next 6 functions
+var db = openDatabase("taskMoniter", "1.0", "taskMoniter database", 200000);
+
+db.transaction(function(tx){
+        tx.executeSql('CREATE TABLE IF NOT EXISTS tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, task_name string , content string)');
+            }, databaseError, getItems);
+
+function getItems(){
+    db.transaction(function(tx){
+    tx.executeSql('SELECT * FROM tasks',[], querySuccess, databaseError);
+    }, databaseError);
+}
+
+function querySuccess(tx, results){
+    var len = results.rows.length;
+    var output = '';
+    for (var i =0; i < len; i++){
+        output += 
+            results.rows.item(i).content;
+    }
+    list.innerHTML = output;
+    
+    var allTaskNames = document.querySelectorAll('.details');
+for (var i =0; i < allTaskNames.length; i++){
+           allTaskNames[i].addEventListener('click', details);
+        }
+}
+
+function insertItem () {
+    db.transaction(function(tx){
+    tx.executeSql('INSERT INTO tasks (task_name, content) VALUES ("'+ taskTitle +'", "' + item  + '")');
+    }, databaseError, getItems);
+}
+
+function databaseError (error) {
+    alert('SQL error: ' + error);
+}
+
+function clearAll () {
+    
+    db.transaction(function(tx){
+    tx.executeSql('DELETE FROM tasks');
+    }, databaseError, getItems);
+   
+    
+    if(localStorage.SWrun == 'true'){
+        localStorage.SWrun = 'false';
+    }
+     return false;
+}
+
+var exists = 'false';
+function sameName(){
+    db.transaction(function(tx){
+    tx.executeSql('SELECT * FROM tasks',[], worked, databaseError);
+    }, databaseError);
+    
+}
+
+function worked(tx, results){
+    exists = 'false';
+    var len = results.rows.length;
+    
+    for (var i =0; i < len; i++){
+        var item_name =  results.rows.item(i).task_name;
+        console.log(item_name);
+        console.log(taskName);
+        if(taskName == item_name){
+            exists = 'true';
+        }
+    }
+    
+    console.log(exists);
+    
+}
+
+
+ function selectingIds(){
+     db.transaction(function(tx){
+    tx.executeSql('SELECT id FROM tasks',[], gettingN, noTasks);
+    }, databaseError);
+ }
+
 // previous data - runs onload of the page
 function previousData(){
     // adding the username
+
+   
+    selectingIds();
+    
+    
     if (localStorage.userName){
         document.getElementById('userName').innerHTML = localStorage.userName;
     }
+    
+    var allTaskNames = document.querySelectorAll('.details');
+    
+for (var i =0; i < allTaskNames.length; i++){
+           allTaskNames[i].addEventListener('click', details);
+        }
+    
+    mottoStatus();
+    
+    if (localStorage.SWrun == 'true'){
+        console.log('one task is not finished');
+        
+        document.querySelector('#add').setAttribute('class', 'disable');
+            document.querySelector('#title').setAttribute('disabled', 'true');
+            canAdd = false;
+        
+       tickTock = setInterval(stopwatch, 1000);
+    }
+    
 }
 
 
 // Change your profile picture 
 var changePP = document.getElementById('profileChange');
 
-var pictureSource = navigator.camera.pictureSourceType;
-
-var destinationType = navigator.camera.destinationType;
-
-function addNewProfile(source) {
-    navigator.camera.getPicture(onPhotoURISuccess, onError, {
-        quality:50,
-        destinationType: destinationType.FILE_URI,
-        sourceType: source
-    });
-}
-
-function onPhotoURISuccess (imageURI) {
-    document.getElementById('profilePicture').src = imageURI;
-}
-
-function onError (error) {
-    alert('Error: ' + error);
-}
+//var pictureSource = navigator.camera.pictureSourceType;
+//
+//var destinationType = navigator.camera.destinationType;
+//
+//function addNewProfile(source) {
+//    navigator.camera.getPicture(onPhotoURISuccess, onError, {
+//        quality:50,
+//        destinationType: destinationType.FILE_URI,
+//        sourceType: source
+//    });
+//}
+//
+//function onPhotoURISuccess (imageURI) {
+//    document.getElementById('profilePicture').src = imageURI;
+//}
+//
+//function onError (error) {
+//    alert('Error: ' + error);
+//}
 
 

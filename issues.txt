@@ -1,5 +1,17 @@
-
+A record of all the issues i have been through:
 - saving data
 - smoothclosure of the side bar
 - scrolling when the sidebar is open
-- 
+- moniters previous tasks
+- the style bug 
+- doesn't scroll when the sidebar is closed XP 
+- doesn't keep monitoring when refreshed
+- title sizes, going lines deep
+- titles when a task is done
+- editing names
+- repeated names
+- scrolling, suggestions, repeating names while editing
+- free task when refreshed
+- the style bug
+- make it keep counting no matter what 
+- special characters bug

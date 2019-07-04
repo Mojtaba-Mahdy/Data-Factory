@@ -38,7 +38,18 @@
 -->
 
         </ol>
+        <h1 class='motto' onclick="changeMotto()"></h1>
     </div>
+    
+<!--    beginnning of the rename form -->
+    <div class='formShade'></div>
+    <form class='rename'>
+        <h2>Rename this task</h2>
+        <input type='text' id='renameInput' autocomplete='off'>
+        <input type='button' id='submitBTN' value='Change'>
+    </form>
+
+<!--    End of the rename form -->
     
 <!--    Beginning of sidebar -->
     
@@ -54,14 +65,19 @@
         </div>
 
         <div class='lower'>
-            <a href='toDoList/todo.html'>My To-do list</a>
+            <a href='index.html' class='current'><span class='icon monitor'></span> Monitor my day </a>
+            <a href='toDoList/todo.html'><span class='icon todo'></span> My To-do list </a>
+            <a href='#'><span class='icon goals'></span> Goals and Habits </a>
+            <a href='#'><span class='icon thoughts'></span> Distracting Thoughts </a>
+            <a href='#'><span class='icon medals'></span> Medals </a>
             
-            <footer>Made with <span>love</span> by John Doe</footer>
+            <footer><h6>Made with <span> </span> by John Doe</h6></footer>
         </div>
     </div>
     
     <div id='smoothClosure'></div>
 <!--    End of side bar -->
     <script src="script.js"></script>
+    <script src="secondary.js"></script>
 </body>
 </html>

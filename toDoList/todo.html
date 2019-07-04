@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="theme-color" content="#222">
 </head>    
-<body onload="oldTasks();">
+<body onload="oldTasks()">
     
     <nav>
         <div id='burgerNav'>
@@ -31,7 +31,21 @@
         </li>
 -->
       </ol>
+        <h1 class='motto' onclick='changeMotto()'></h1>
     </div>
+    
+    
+        
+<!--    beginnning of the rename form -->
+    <div class='formShade'></div>
+    <form class='rename'>
+        <h2>Rename this task</h2>
+        <input type='text' id='renameInput' autocomplete="off">
+        <input type='button' id='submitBTN' value='Change'>
+    </form>
+
+
+<!--    End of the rename form -->
     
 <!--    Beginning of side bar -->
     <div id='sidebar'>
@@ -46,13 +60,18 @@
         </div>
         
         <div class="lower">
-            <a href='../index.html'>Moniter my day</a>
-            <footer>Made with <span>love</span> by John Doe</footer>
+            <a href='../index.html'><span class='icon monitor'></span>Monitor my day</a>
+            <a href='todo.html' class='current'><span class='icon todo'></span>My To-do list</a>
+            <a href='#'><span class='icon goals'></span>Goals and Habits</a>
+            <a href='#'><span class='icon thoughts'></span>Distracting Thoughts</a>
+            <a href='#'><span class='icon medals'></span>Medals</a>
+            <footer><h6>Made with <span> </span> by John Doe</h6></footer>
         </div>
     </div>
     <div id='smoothClosure'></div>
 <!--    End of side bar -->
     
     <script src="script.js"></script>
+    <script src="second.js"></script>
 </body>
 </html>
