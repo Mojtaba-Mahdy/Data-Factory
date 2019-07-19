@@ -265,14 +265,14 @@ function endStopwatch () {
     // adding labels (seconds, minutes, hours)
         if(timeConsumed.slice(0,2) == '00') {
             if(timeConsumed.slice(0,5) == '00:00'){
-                timeConsumed = timeConsumed.slice(6) + ' Seconds';
+                timeConsumed = timeConsumed.slice(6) + ' Sec';
             }
             else {
-                 timeConsumed = timeConsumed.slice(3) + ' Minutes';
+                 timeConsumed = timeConsumed.slice(3) + ' Min';
             }
         } else {
             
-            timeConsumed = timeConsumed.slice(0,-3) + ' Hours';
+            timeConsumed = timeConsumed.slice(0,-3) + ' Hrs';
         }
  
         document.getElementById(localStorage.idendTask).innerHTML = timeConsumed;
@@ -308,7 +308,9 @@ function endStopwatch () {
     
        // can't press end agian 
         document.getElementById(localStorage.idendTask).setAttribute('onclick', '');
-        document.getElementById(localStorage.idendTask).style.backgroundColor = '#777';
+        document.getElementById(localStorage.idendTask).className = 'ended';
+    
+    document.getElementById(localStorage.idStopwatch).className = 'stopwatched';
     
     var updatedLI = '<li>' + document.getElementById(localStorage.idendTask).parentNode.innerHTML + '</li>';
     
@@ -354,7 +356,8 @@ killSideBar.addEventListener('click', closeSideBar);
 
 
 function openSideBar () {
-    window.onscroll = function () {
+    
+   window.onscroll = function() {
         window.scrollTo(0,0);
     }
     
@@ -366,12 +369,13 @@ function openSideBar () {
 
 function closeSideBar () {
     
-        window.onscroll = function () {
-        window.scroll();
-    }
         document.getElementById('sidebar').style = 'display:none';   
         
         killSideBar.style.display = 'none';
+    
+     window.onscroll = function() {
+        window.scroll();
+    }
 }
 
 
@@ -382,7 +386,7 @@ currName.addEventListener('click', changeUserName);
 
 
 function changeUserName () {
-    var userName = prompt('Type your new user name');
+    var userName = prompt('Type your new user name', localStorage.userName);
     
     
      if(userName.toLowerCase() == 'noname' || userName.toLowerCase() == 'no one' || userName.toLowerCase() == 'nameless' || userName.toLowerCase() == 'nobody'){
@@ -535,24 +539,25 @@ for (var i =0; i < allTaskNames.length; i++){
 // Change your profile picture 
 var changePP = document.getElementById('profileChange');
 
-//var pictureSource = navigator.camera.pictureSourceType;
-//
-//var destinationType = navigator.camera.destinationType;
-//
-//function addNewProfile(source) {
-//    navigator.camera.getPicture(onPhotoURISuccess, onError, {
-//        quality:50,
-//        destinationType: destinationType.FILE_URI,
-//        sourceType: source
-//    });
-//}
-//
-//function onPhotoURISuccess (imageURI) {
-//    document.getElementById('profilePicture').src = imageURI;
-//}
-//
-//function onError (error) {
-//    alert('Error: ' + error);
-//}
+var pictureSource = navigator.camera.PictureSourceType;
+
+var destinationType = navigator.camera.DestinationType;
+
+
+function addNewProfile(source) {
+    navigator.camera.getPicture(onPhotoURISuccess, onError, {
+        quality:50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source
+    });
+}
+
+function onPhotoURISuccess (imageURI) {
+    document.getElementById('profilePicture').src = imageURI;
+}
+
+function onError (error) {
+    alert('Error: ' + error);
+}
 
 

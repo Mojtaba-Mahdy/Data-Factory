@@ -401,7 +401,8 @@ document.getElementById('userName').addEventListener('click', changeUserName);
 
 // changing the user name
 function changeUserName () {
-    var userName = prompt('Type your new user name');
+    
+    var userName = prompt('Type your new user name', localStorage.userName);
     
     
     if(userName.toLowerCase() == 'noname' || userName.toLowerCase() == 'no one' || userName.toLowerCase() == 'nameless' || userName.toLowerCase() == 'nobody'){

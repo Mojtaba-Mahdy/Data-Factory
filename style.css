@@ -321,14 +321,23 @@
     
     #taskName {
         display:block;
-        width:80%;
+        width:72%;
+        height: 40%;
         margin-bottom:5px;
-        font-weight: 500;
+        font-weight: 600;
         font-size:1em;
+        overflow: hidden;
     }
     
     .stopwatch {
         color:red;
+        font-weight: 400;
+        font-size:.8em;
+        font-family: sans-serif;
+    }
+    
+    .stopwatched {
+        color:#888;
         font-weight: 400;
         font-size:.8em;
         font-family: sans-serif;
@@ -349,6 +358,21 @@
         font-weight: 500;
     }
     
+    .ended {
+        display:block;
+        position: absolute;
+        box-sizing:border-box;
+        float: right;
+        top: 10px;
+        right: 10px;
+        padding:5px;
+        border-radius:3px;
+        font-weight: 300;
+        color:#fff;
+        background:#9999aa;
+        font-weight: 500;
+    }
+    
     ol li:nth-child(even){
         background-color:#fff;
         color:#222;
@@ -357,6 +381,10 @@
        background-color:#eee;
         color:#333;
 
+    }
+    
+    ol li:last-child {
+        margin-bottom: 30px;
     }
     
     form.rename {

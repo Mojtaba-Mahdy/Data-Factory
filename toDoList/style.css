@@ -367,6 +367,10 @@
 
     }
     
+    ol li:last-child {
+        margin-bottom: 30px;
+    }
+    
     form.rename {
         display: none;
         position:absolute;

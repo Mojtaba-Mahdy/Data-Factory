@@ -106,25 +106,32 @@ function found(tx, results){
 
 function changeMotto() {
     
+    if(localStorage.motto == 'null'){
+        var newMotto = prompt('Type your new motivational quote');   
+    } else {
+    
     var newMotto = prompt('Type your new motivational quote', localStorage.motto);
-    
-    
-    
-    localStorage.motto = newMotto;
-    
-    motto.innerHTML = newMotto;
-    
-    if(!newMotto){
-        motto.innerHTML = 'Type a motivational quote here';
     }
     
     
+    
+    if(!newMotto && localStorage.motto == 'null'){
+        motto.innerHTML = 'Type a motivational quote here';
+    } else {
+        if(!newMotto){
+            motto.innerHTML = localStorage.motto;
+        } else {
+        localStorage.motto = newMotto;
+        motto.innerHTML = newMotto;
+        }
+    }
+   
 }
 
 
 function mottoStatus () {
 
-    if (localStorage.motto == 'null' || localStorage.motto == '') {
+    if (localStorage.motto == 'null' || localStorage.motto == '' || !localStorage.motto) {
         motto.innerHTML = 'Type a motivational quote here';
        
     }
